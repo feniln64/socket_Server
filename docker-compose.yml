@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  socket-server:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.docopypaste.rule=Host(`socket-server.syncpoint.live`)"
+      - "traefik.http.services.docopypaste.loadbalancer.server.port=9001"
+      - "traefik.http.routers.docopypaste.tls.certresolver=lets-encrypt"
+      - "traefik.http.routers.docopypaste.tls=true"
+    networks:
+      - traefik-net
+    env_file:
+      - .env
+
+networks:
+  traefik-net:
+    external: true
+    
