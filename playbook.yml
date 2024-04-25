@@ -1,0 +1,33 @@
+- hosts: socket-server
+  tasks:
+    - name: ping all hosts
+      ping:
+
+    - name: check running container
+      command: docker ps -a
+      register: out
+
+    - debug: var=out.stdout_lines
+   
+    - name: clone the repository
+      git:
+        repo: https://github.com/feniln64/socket_Server.git
+        dest: /home/ubuntu/socket_Server
+
+    - name: change directory
+      command: chdir=/home/ubuntu/socket_Server ls
+
+    - name: install dependencies
+      command: npm ci
+
+    - name: create .env file
+      command: touch .env
+
+    - name: write to .env file
+      command: echo "PORT=9001" > .env
+
+    - name: write to .env file
+      command: echo "REDIS_URL=redis url" >> .env
+
+    - name: run the container
+      command: docker compose up -d

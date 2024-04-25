@@ -1,0 +1,17 @@
+- hosts: socket-server
+  tasks:
+    - name: ping all hosts
+      ping:
+
+    - name: check running container
+      command: docker ps -a
+      register: out
+
+    - debug: var=out.stdout_lines
+    - name: Download file
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/FenilN39/traefik/main/traefik.sh
+        dest: /home/ubuntu/traefik.sh
+
+    - name: run the script
+      command: sh /home/ubuntu/traefik.sh
