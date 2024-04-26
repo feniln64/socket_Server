@@ -4,7 +4,8 @@ FROM node:18.16.1-alpine3.17
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package*.json ./
+COPY package.json ./
+COPY package-lock.json ./
 
 RUN npm install
 

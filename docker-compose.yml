@@ -6,8 +6,6 @@ services:
     container_name: socket-server
     ports:
       - "9001"
-    volumes:
-      - ./:/usr/src/app
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.docopypaste.rule=Host(`socket-server.cpypst.online`)"
